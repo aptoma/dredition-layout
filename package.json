@@ -34,7 +34,7 @@
     "nunjucks": "^3.0.1"
   },
   "devDependencies": {
-    "@aptoma/eslint-config": "^6.0.0",
+    "@aptoma/eslint-config": "^7.0.0",
     "chai": "^4.0.2",
     "eslint": "^4.0.0",
     "istanbul": "^0.4.5",
