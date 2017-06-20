@@ -1,6 +1,6 @@
 'use strict';
 
-const JsSha = require('jssha');
+const utils = require('../utils.js');
 
 module.exports = resize;
 
@@ -9,10 +9,10 @@ module.exports = resize;
  *
  * @param {String} url
  * @param {Object} options
- * @param {String} transformSecret
+ * @param {String} secret
  * @return {Promise}
  */
-function resize(url, options, transformSecret) {
+function resize(url, options, secret) {
 	return new Promise((resolve) => {
 		url = url.split('?');
 
@@ -33,12 +33,6 @@ function resize(url, options, transformSecret) {
 
 		url += '?' + decodeURIComponent(resize.join('&'));
 
-		const sha = new JsSha('SHA-256', 'TEXT');
-		sha.setHMACKey(transformSecret, 'TEXT');
-		sha.update(url);
-
-		url += '&accessToken=' + sha.getHMAC('HEX');
-
-		resolve(url);
+		resolve(utils.signUrl(url, secret));
 	});
 }
