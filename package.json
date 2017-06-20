@@ -1,0 +1,45 @@
+{
+  "name": "dredition-layout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint src/**/*.js test/**/*.js",
+    "watch": "mocha --watch 'src/**/*.js' --timeout 500",
+    "test": "npm run lint && NODE_ENV=test istanbul cover _mocha -- -u exports -R spec --timeout 3000 src/**/*.test.js",
+    "mocha-only-detect": "mocha-only-detector-glob **/*.test.js",
+    "ci": "npm test --coverage && istanbul report cobertura",
+    "changelog": "git log `git describe --tags --abbrev=0`..HEAD --pretty=format:\"  * %s\"",
+    "release": "npm run ci && release-it -n -i patch",
+    "release:minor": "npm run ci && release-it -n -i minor",
+    "release:major": "npm run ci && release-it -n -i major"
+  },
+  "engines": {
+    "node": ">=6.x.x"
+  },
+  "eslintConfig": {
+    "extends": "@aptoma/eslint-config",
+    "env": {
+      "node": true,
+      "mocha": true,
+      "es6": true
+    }
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "js-sha256": "^0.5.0",
+    "jssha": "^2.3.1",
+    "nunjucks": "^3.0.1"
+  },
+  "devDependencies": {
+    "@aptoma/eslint-config": "^6.0.0",
+    "chai": "^4.0.2",
+    "eslint": "^4.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2",
+    "mocha-only-detector": "^0.1.0",
+    "release-it": "^2.7.3"
+  }
+}
