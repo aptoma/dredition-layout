@@ -29,7 +29,6 @@
   "license": "UNLICENSED",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "js-sha256": "^0.5.0",
     "jssha": "^2.3.1",
     "nunjucks": "^3.0.1"
   },

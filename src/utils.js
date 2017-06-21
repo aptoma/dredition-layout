@@ -1,10 +1,10 @@
 'use strict';
 
-const JsSha = require('jssha');
+const JSSHA = require('jssha');
 
 module.exports = {
 	signUrl(url, secret) {
-		const sha = new JsSha('SHA-256', 'TEXT');
+		const sha = new JSSHA('SHA-256', 'TEXT');
 		sha.setHMACKey(secret, 'TEXT');
 		sha.update(url);
 
