@@ -4,6 +4,7 @@ const Promise = require('bluebird');
 const nunjucks = require('nunjucks');
 const ObjectLoader = require('./object-loader');
 const resizeFilter = require('./filters/resize');
+const imageratioFilter = require('./filters/imageratio');
 
 exports.renderString = renderString;
 exports.renderJsonTemplate = renderJsonTemplate;
@@ -67,6 +68,8 @@ function getEnvironment(loaders, imageTransformSecret) {
 		resizeFilter(url, options, imageTransformSecret)
 			.then((url) => done(null, url));
 	}, true);
+
+	env.addFilter('ratio', imageratioFilter);
 
 	return env;
 }
