@@ -8,6 +8,6 @@ module.exports = {
 		sha.setHMACKey(secret, 'TEXT');
 		sha.update(url);
 
-		return url + '&accessToken=' + sha.getHMAC('HEX');
+		return url + (url.match(/\?/) ? '&' : '?') + 'accessToken=' + sha.getHMAC('HEX');
 	}
 };
