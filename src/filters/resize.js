@@ -28,9 +28,9 @@ function resize(url, options, secret) {
 			url += (url.match(/\?/) ? '&' : '?') + 't[resize][' + key + ']=' + encodeURIComponent(options[key]);
 		});
 
-		url = url.replace(/\[/g, '%5B');
-		url = url.replace(/\]/g, '%5D');
+		url = utils.signUrl(url, secret);
+		url = url.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
 
-		resolve(utils.signUrl(url, secret));
+		resolve(url);
 	});
 }

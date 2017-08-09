@@ -12,7 +12,7 @@ describe('Resize images', () => {
 			'secret'
 		)
 			.then((url) => {
-				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=300&t%5Bresize%5D%5Bheight%5D=200&t%5Bresize%5D%5Bflag%5D=!&accessToken=9cc8aca0ff6e9febc2efddfae52cdc46d4272db437e7fbf89ec5479f3dfcc6bd');
+				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=300&t%5Bresize%5D%5Bheight%5D=200&t%5Bresize%5D%5Bflag%5D=!&accessToken=ade8cc25cceffe1aca3a91162f1705e118c3cfb21570ab64aff26011e4965b21');
 			});
 	});
 
@@ -23,7 +23,7 @@ describe('Resize images', () => {
 			'secret'
 		)
 			.then((url) => {
-				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=1&accessToken=681714c0de2a8640b16cfc4080d19bb83046a7aaf4e1b41e094195c9b50672db');
+				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=1&accessToken=626b3dc7b0cfdaad20d15f09ed0b32a2153066ae41320a79f21dd32ca0c636af');
 			});
 	});
 
@@ -45,7 +45,7 @@ describe('Resize images', () => {
 			'secret'
 		)
 			.then((url) => {
-				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?yo=true&t%5Bresize%5D%5Bwidth%5D=1&accessToken=5abcdf69e9b5cd521060c3eb60e08ebfa135c225aa91aa4b8c52a7b50d6ed3db');
+				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?yo=true&t%5Bresize%5D%5Bwidth%5D=1&accessToken=84be4536679e2777dd631d59ea1a606ad2d77998f03715d1b9d8316feec0c27f');
 			});
 	});
 
@@ -56,7 +56,7 @@ describe('Resize images', () => {
 			'secret'
 		)
 			.then((url) => {
-				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=1&accessToken=681714c0de2a8640b16cfc4080d19bb83046a7aaf4e1b41e094195c9b50672db');
+				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=1&accessToken=626b3dc7b0cfdaad20d15f09ed0b32a2153066ae41320a79f21dd32ca0c636af');
 			});
 	});
 
@@ -67,7 +67,7 @@ describe('Resize images', () => {
 			'secret'
 		)
 			.then((url) => {
-				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=1&accessToken=681714c0de2a8640b16cfc4080d19bb83046a7aaf4e1b41e094195c9b50672db');
+				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=1&accessToken=626b3dc7b0cfdaad20d15f09ed0b32a2153066ae41320a79f21dd32ca0c636af');
 			});
 	});
 
@@ -78,7 +78,7 @@ describe('Resize images', () => {
 			'secret'
 		)
 			.then((url) => {
-				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=1&t%5Bresize%5D%5Bheight%5D=1&accessToken=e5c85ac1fb1529f395ce5bff6e38f24c0bce5efb0e9e4c5ba2f75f72bde4965e');
+				expect(url).to.equal('http://ass.com/users/aptoma/images/1.jpg?t%5Bresize%5D%5Bwidth%5D=1&t%5Bresize%5D%5Bheight%5D=1&accessToken=ed6dab29d3b5c311d302456ed033a3dc6a6b631bae553310349cf089d5723282');
 			});
 	});
 });
