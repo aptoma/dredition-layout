@@ -61,7 +61,7 @@ function renderJsonTemplate(templates, data, options = {}) {
  */
 function getEnvironment(loaders, imageTransformSecret) {
 	const env = new nunjucks.Environment(loaders, {
-		autoescape: true
+		autoescape: false
 	});
 
 	env.addFilter('resize', (url, options, done) => {
