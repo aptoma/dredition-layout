@@ -23,7 +23,7 @@ function resize(url, options, secret) {
 		delete options.__keywords;
 
 		// remove all instances of t[resize] parameters in URL before adding only new values
-		url = url.replace(/(&|\?)t\[resize\]\[\w*\]=\d*/g, '');
+		url = url.replace(/(&|\?)t\[resize\]\[\w*\]=(<|>|\^|!|%|@|\d)*/g, '');
 		Object.keys(options).forEach((key) => {
 			url += (url.match(/\?/) ? '&' : '?') + 't[resize][' + key + ']=' + options[key];
 		});
