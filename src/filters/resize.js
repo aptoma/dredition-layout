@@ -15,19 +15,17 @@ module.exports = resize;
 function resize(url, options, secret) {
 	return new Promise((resolve) => {
 		url = decodeURIComponent(url);
-		url = url.replace(/(&|\?)accessToken=[a-f0-9].*/, '');
+		url = url.replace(/(&|\?)accessToken=[a-f0-9]*/, '');
 
 		options = Object.assign({}, options);
 
 		// __keywords is added by nunjucks
 		delete options.__keywords;
 
-		Object.keys(options).some((key) => {
-			if (key === 'width' || key === 'height') {
-				url = url.replace(/\&t\[resize\]\[(width|height)\]=\d.*/g, '');
-				url += (url.match(/\?/) ? '&' : '?') + 't[resize][' + key + ']=' + options[key];
-				return false;
-			}
+		// remove all instances of t[resize] parameters in URL before adding only new values
+		url = url.replace(/(&|\?)t\[resize\]\[\w*\]=\d*/g, '');
+		Object.keys(options).forEach((key) => {
+			url += (url.match(/\?/) ? '&' : '?') + 't[resize][' + key + ']=' + options[key];
 		});
 
 		resolve(utils.signUrl(url, secret));
