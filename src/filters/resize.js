@@ -14,24 +14,21 @@ module.exports = resize;
  */
 function resize(url, options, secret) {
 	return new Promise((resolve) => {
-		url = url.split('?');
+		url = decodeURIComponent(url);
+		url = url.replace(/(&|\?)accessToken=[a-f0-9].*/, '');
 
-		if (url.length <= 1) {
-			return resolve(url);
-		}
-
-		url = url[0];
 		options = Object.assign({}, options);
 
 		// __keywords is added by nunjucks
 		delete options.__keywords;
 
-		const resize = [];
-		Object.keys(options).forEach((key) => {
-			resize.push('t[resize][' + key + ']=' + options[key]);
+		Object.keys(options).some((key) => {
+			if (key === 'width' || key === 'height') {
+				url = url.replace(/\&t\[resize\]\[(width|height)\]=\d.*/g, '');
+				url += (url.match(/\?/) ? '&' : '?') + 't[resize][' + key + ']=' + options[key];
+				return false;
+			}
 		});
-
-		url += '?' + decodeURIComponent(resize.join('&'));
 
 		resolve(utils.signUrl(url, secret));
 	});
