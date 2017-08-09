@@ -25,8 +25,11 @@ function resize(url, options, secret) {
 		// remove all instances of t[resize] parameters in URL before adding only new values
 		url = url.replace(/(&|\?)t\[resize\]\[\w*\]=(<|>|\^|!|%|@|\d)*/g, '');
 		Object.keys(options).forEach((key) => {
-			url += (url.match(/\?/) ? '&' : '?') + 't[resize][' + key + ']=' + options[key];
+			url += (url.match(/\?/) ? '&' : '?') + 't[resize][' + key + ']=' + encodeURIComponent(options[key]);
 		});
+
+		url = url.replace(/\[/g, '%5B');
+		url = url.replace(/\]/g, '%5D');
 
 		resolve(utils.signUrl(url, secret));
 	});
