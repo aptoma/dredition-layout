@@ -14,7 +14,11 @@ module.exports = resize;
  */
 function resize(url, options, secret) {
 	return new Promise((resolve) => {
-		url = decodeURIComponent(url);
+		// Decode all ASS [t]ransform array brackets
+		url = url.replace(/(&|\?)t%5B\w*%5D%5B\w*%5D/g, (assParam) => {
+			return assParam.replace(/%5B/g, '[').replace(/%5D/g, ']');
+		});
+
 		url = url.replace(/(&|\?)accessToken=[a-f0-9]*/, '');
 
 		options = Object.assign({}, options);
@@ -28,8 +32,13 @@ function resize(url, options, secret) {
 			url += (url.match(/\?/) ? '&' : '?') + 't[resize][' + key + ']=' + encodeURIComponent(options[key]);
 		});
 
+		// Add ASS accessToken before encoding array brackets
 		url = utils.signUrl(url, secret);
-		url = url.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
+
+		// Encode all ASS [t]ransform array brackets
+		url = url.replace(/(&|\?)t\[\w*]\[\w*\]/g, (assParam) => {
+			return assParam.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
+		});
 
 		resolve(url);
 	});
