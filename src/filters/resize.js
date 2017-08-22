@@ -1,6 +1,7 @@
 'use strict';
 
 const utils = require('../utils.js');
+const qs = require('qs');
 
 module.exports = resize;
 
@@ -14,32 +15,26 @@ module.exports = resize;
  */
 function resize(url, options, secret) {
 	return new Promise((resolve) => {
-		// Decode all ASS [t]ransform array brackets
-		url = url.replace(/(&|\?)t%5B\w*%5D%5B\w*%5D/g, (assParam) => {
-			return assParam.replace(/%5B/g, '[').replace(/%5D/g, ']');
-		});
-
-		url = url.replace(/(&|\?)accessToken=[a-f0-9]*/, '');
-
-		options = Object.assign({}, options);
+		const urlParts = url.split('?');
+		const baseUrl = urlParts[0];
+		const query = urlParts.length > 1 ? qs.parse(urlParts[1]) : {};
 
 		// __keywords is added by nunjucks
+		options = Object.assign({}, options);
 		delete options.__keywords;
 
-		// remove all instances of t[resize] parameters in URL before adding only new values
-		url = url.replace(/(&|\?)t\[resize\]\[\w*\]=(<|>|\^|!|%|@|\d)*/g, '');
-		Object.keys(options).forEach((key) => {
-			url += (url.match(/\?/) ? '&' : '?') + 't[resize][' + key + ']=' + encodeURIComponent(options[key]);
-		});
+		if (!query.t) {
+			query.t = {};
+		}
 
-		// Add ASS accessToken before encoding array brackets
-		url = utils.signUrl(url, secret);
+		delete query.accessToken;
+		query.t.resize = Object.assign({}, options);
 
-		// Encode all ASS [t]ransform array brackets
-		url = url.replace(/(&|\?)t\[\w*]\[\w*\]/g, (assParam) => {
-			return assParam.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
-		});
+		const queryString = qs.stringify(query);
+		const signUrl = baseUrl + (queryString ? '?' + decodeURIComponent(queryString) : '');
+		const accessToken = utils.getAccessToken(signUrl, secret);
 
-		resolve(url);
+		// We return a new URL with encoded query parameters
+		resolve(baseUrl + '?' + (queryString ? queryString + '&' : '') + 'accessToken=' + accessToken);
 	});
 }
