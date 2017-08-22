@@ -1,6 +1,7 @@
 'use strict';
 
 const utils = require('../utils.js');
+const qs = require('qs');
 
 module.exports = resize;
 
@@ -14,25 +15,26 @@ module.exports = resize;
  */
 function resize(url, options, secret) {
 	return new Promise((resolve) => {
-		url = url.split('?');
-
-		if (url.length <= 1) {
-			return resolve(url);
-		}
-
-		url = url[0];
-		options = Object.assign({}, options);
+		const urlParts = url.split('?');
+		const baseUrl = urlParts[0];
+		const query = urlParts.length > 1 ? qs.parse(urlParts[1]) : {};
 
 		// __keywords is added by nunjucks
+		options = Object.assign({}, options);
 		delete options.__keywords;
 
-		const resize = [];
-		Object.keys(options).forEach((key) => {
-			resize.push('t[resize][' + key + ']=' + options[key]);
-		});
+		if (!query.t) {
+			query.t = {};
+		}
 
-		url += '?' + decodeURIComponent(resize.join('&'));
+		delete query.accessToken;
+		query.t.resize = Object.assign({}, options);
 
-		resolve(utils.signUrl(url, secret));
+		const queryString = qs.stringify(query);
+		const signUrl = baseUrl + (queryString ? '?' + decodeURIComponent(queryString) : '');
+		const accessToken = utils.getAccessToken(signUrl, secret);
+
+		// We return a new URL with encoded query parameters
+		resolve(baseUrl + '?' + (queryString ? queryString + '&' : '') + 'accessToken=' + accessToken);
 	});
 }
