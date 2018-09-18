@@ -5,6 +5,7 @@ const nunjucks = require('nunjucks');
 const ObjectLoader = require('./object-loader');
 const resizeFilter = require('./filters/resize');
 const imageratioFilter = require('./filters/imageratio');
+const drRegularTransform = require('./filters/dr-regular-transform');
 
 exports.renderString = renderString;
 exports.renderJsonTemplate = renderJsonTemplate;
@@ -70,6 +71,8 @@ function getEnvironment(loaders, imageTransformSecret) {
 	}, true);
 
 	env.addFilter('ratio', imageratioFilter);
+
+	env.addFilter('drRegularTransform', drRegularTransform);
 
 	return env;
 }
